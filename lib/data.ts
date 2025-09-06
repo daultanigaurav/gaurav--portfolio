@@ -13,6 +13,13 @@ export const CONTENT = {
     linkedin: "https://linkedin.com/in/daultanigaurav",
     portfolio: "https://gauravdaultani.me",
   },
+  skills: {
+    cloud: ["AWS", "Docker", "Kubernetes", "Terraform", "CloudFormation"],
+    backend: ["Python", "Django", "Node.js", "Express", "PostgreSQL", "MongoDB"],
+    frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
+    devops: ["Linux", "Git", "CI/CD", "Jenkins", "Nginx", "Apache"],
+    tools: ["VS Code", "GitHub", "Postman", "Figma", "Slack", "Jira"],
+  },
   projects: [
     {
       id: "staysmart",
