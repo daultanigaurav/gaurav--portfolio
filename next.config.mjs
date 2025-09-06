@@ -11,8 +11,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/gaurav--portfolio' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '/gaurav--portfolio' : '',
+  // Only add basePath for GitHub Pages, not for custom domain
+  ...(process.env.GITHUB_PAGES === 'true' && {
+    assetPrefix: '/gaurav--portfolio',
+    basePath: '/gaurav--portfolio',
+  }),
 }
 
 export default nextConfig

@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build:github": "GITHUB_PAGES=true next build",
+    "build:custom": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "export": "next build && next export"
+    "export": "npm run build:custom"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
