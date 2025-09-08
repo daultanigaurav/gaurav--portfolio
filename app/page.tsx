@@ -15,20 +15,19 @@ export default function PortfolioPage() {
   const [showCursor, setShowCursor] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [preloaderText, setPreloaderText] = useState("");
+  const [preloaderText, setPreloaderText] = useState<string | null>(null);
 
   useEffect(() => {
-    // Preloader sequence: "G" -> "GD" -> reveal
-    setPreloaderText("G");
-    const step1 = setTimeout(() => setPreloaderText("GD"), 700);
-    const end = setTimeout(() => setIsLoading(false), 1600);
-    return () => { clearTimeout(step1); clearTimeout(end); };
+    // Preloader: draw cursive g, then d, fade out
+    const end = setTimeout(() => setIsLoading(false), 1900);
+    return () => clearTimeout(end);
   }, []);
 
   useEffect(() => {
+    if (isLoading) return; // start typing only after preloader
     // Rotating terminal typing animation
     const lines = [
-      "> Hello, I'm Gaurav_",
+      "> Hello I'm Gaurav_",
       "> Linux & AWS enthusiast",
       "> Building full-stack web apps",
       "> Crafting scalable backend systems",
@@ -58,7 +57,7 @@ export default function PortfolioPage() {
     setShowCursor(true);
     typeNext();
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     // Smooth scrolling for navigation links
@@ -97,11 +96,21 @@ export default function PortfolioPage() {
     Tools: Wrench,
   } as const;
 
+  const projectImages: Record<string, { src: string; alt: string }> = {
+    staysmart: { src: "/placeholder.jpg", alt: "StaySmart portal preview" },
+    "github-analyzer": { src: "/placeholder-logo.png", alt: "GitHub analyzer preview" },
+    "frame-interpolation": { src: "/placeholder-user.jpg", alt: "AI frame interpolation preview" },
+    travellite: { src: "/placeholder.svg", alt: "TravelLite preview" },
+  };
+
   return (
-    <div className="min-h-screen gradient-bg bg-grain text-foreground font-body">
+    <div className={`min-h-screen gradient-bg bg-grain text-foreground font-body`}>
       {isLoading && (
-        <div className="preloader">
-          <div className="preloader__type">{preloaderText}<span className="preloader__cursor">_</span></div>
+        <div className="preloader preloader--anim">
+          <svg className="preloader-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+            <text x="180" y="130" className="preloader-letter">g</text>
+            <text x="300" y="130" className="preloader-letter letter-d">d</text>
+          </svg>
         </div>
       )}
       <div className="mesh-accent" aria-hidden="true" />
@@ -276,9 +285,9 @@ export default function PortfolioPage() {
           <div className="grid md:grid-cols-2 gap-10">
             {CONTENT.projects.map((project, index) => (
               <Card key={project.id} className="group border-0 shadow-soft card-hover-strong rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm">
-                {/* Thumbnail banner / mockup bar */}
-                <div className="h-36 w-full bg-gradient-to-br from-accent/30 to-primary/20 relative overflow-hidden">
-                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_20%,white,transparent_35%),radial-gradient(circle_at_80%_30%,white,transparent_35%)]" />
+                {/* Abstract gradient banner */}
+                <div className="h-40 w-full relative overflow-hidden bg-gradient-to-br from-accent/25 via-primary/15 to-transparent">
+                  <div className="absolute -inset-10 opacity-20 blur-2xl bg-[radial-gradient(40%_60%_at_20%_30%,theme(colors.accent/60),transparent_60%),radial-gradient(30%_50%_at_80%_60%,theme(colors.primary/50),transparent_60%)]" />
                 </div>
                 <CardHeader className="pb-6 pt-6">
                   <CardTitle className="flex items-center justify-between text-2xl font-heading mb-4">
@@ -297,7 +306,7 @@ export default function PortfolioPage() {
                       </Badge>
                     ))}
                   </div>
-                  <Button asChild className={`w-full py-3 rounded-full shadow-soft cta-hover ${index % 2 === 0 ? 'bg-accent text-white hover:bg-accent/90' : 'bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-white'}`}>
+                  <Button asChild className={`w-full py-3 rounded-full shadow-soft cta-hover project-cta ${index % 2 === 0 ? 'bg-accent text-white hover:bg-accent/90' : 'bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-white'}`}>
                     <a href={project.link} target="_blank" rel="noopener noreferrer">
                       View Project
                     </a>

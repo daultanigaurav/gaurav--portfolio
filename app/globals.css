@@ -331,22 +331,29 @@
 .preloader {
   position: fixed;
   inset: 0;
-  background: radial-gradient(1200px 600px at 50% -10%, rgba(20,184,166,0.08), transparent 60%), var(--color-background);
+  background: var(--color-background);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  color: #111827;
 }
+.dark .preloader { color: #e5e7eb; }
+.preloader--fade { opacity: 0; transition: opacity 250ms ease; }
+.preloader--anim { animation: preloader-fadeout 250ms ease 1.9s forwards; }
+@keyframes preloader-fadeout { to { opacity: 0; visibility: hidden; } }
 /* Type preloader: G -> GD */
 .preloader__type {
-  font-family: var(--font-mono);
-  font-size: 28px;
-  color: var(--color-accent);
-  background: rgba(20,184,166,0.08);
+  font-family: var(--font-cursive), var(--font-serif);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: rgba(16, 185, 129, 0.06);
   border: 1px solid var(--color-border);
-  padding: 14px 20px;
-  border-radius: 12px;
-  box-shadow: 0 14px 34px -16px rgba(0,0,0,0.45);
+  padding: 16px 22px;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -18px rgba(0,0,0,0.45);
+  color: var(--color-accent);
 }
 .preloader__cursor {
   display: inline-block;
@@ -355,6 +362,41 @@
   animation: blink 1s infinite;
   transform: translateY(-1px);
 }
+
+/* pop-in letters animation */
+.pre-pop {
+  display: inline-block;
+  transform: translateY(8px) scale(0.98);
+  opacity: 0;
+  animation: pre-pop 500ms ease forwards;
+  background-image: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.pre-pop:nth-child(1) { animation-delay: 0.05s; }
+.pre-pop:nth-child(2) { animation-delay: 0.35s; }
+@keyframes pre-pop {
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Cursive SVG draw preloader */
+.preloader-svg { width: clamp(300px, 60vw, 560px); height: auto; }
+.preloader-letter {
+  font-family: var(--font-cursive), cursive;
+  font-size: clamp(72px, 18vw, 140px);
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  paint-order: stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: pre-draw 1.15s ease-in-out forwards;
+}
+.letter-d { animation-delay: 0.85s; }
+@keyframes pre-draw { to { stroke-dashoffset: 0; } }
 /* legacy dot variant kept for fallback but unused */
 .preloader__dot { display:none; }
 
@@ -438,6 +480,14 @@
 .card-hover-strong:hover {
   transform: translateY(-6px) scale(1.01);
   box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.45);
+}
+
+/* extra hover polish for project cards */
+.card-hover-strong:hover .project-cta {
+  transform: translateY(-1px);
+}
+.project-cta {
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* Removed witty tooltip styles */

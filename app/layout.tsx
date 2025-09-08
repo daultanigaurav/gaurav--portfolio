@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
@@ -16,6 +16,13 @@ const playfair = Playfair_Display({
   display: 'swap',
 })
 
+const greatVibes = Great_Vibes({
+  subsets: ['latin'],
+  variable: '--font-cursive',
+  weight: '400',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Gaurav Daultani - Portfolio',
   description: 'AWS Cloud, Linux Enthusiast & Backend Developer in Django. Building scalable solutions with Cloud, Linux & Django.',
@@ -29,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+      <body className={`${inter.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
