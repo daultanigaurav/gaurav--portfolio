@@ -7,12 +7,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Github, Linkedin, Mail, MapPin, ExternalLink, Terminal, Code, Server, Database, Wrench, Twitter, Instagram, PenTool } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, ExternalLink, Terminal, Code, Server, Database, Wrench, Twitter, Instagram, PenTool, Menu, X } from "lucide-react";
 import Image from "next/image";
 
 export default function PortfolioPage() {
   const [terminalText, setTerminalText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     // Rotating terminal typing animation
@@ -101,7 +102,24 @@ export default function PortfolioPage() {
                 <a href="#contact" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">Contact</a>
               </div>
               <ThemeToggle />
+              <button
+                className="md:hidden inline-flex items-center justify-center rounded-lg p-2 border border-border hover:border-accent hover:text-accent transition-colors"
+                aria-label="Open menu"
+                aria-expanded={mobileOpen}
+                onClick={() => setMobileOpen((v) => !v)}
+              >
+                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
             </div>
+          </div>
+        </div>
+        {/* Mobile menu */}
+        <div className={`md:hidden overflow-hidden border-t transition-[max-height,opacity] duration-300 ease-out ${mobileOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="px-8 py-4 space-y-3 bg-background/95">
+            <a href="#about" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>About</a>
+            <a href="#skills" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>Skills</a>
+            <a href="#projects" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>Projects</a>
+            <a href="#contact" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>Contact</a>
           </div>
         </div>
       </nav>
@@ -209,7 +227,7 @@ export default function PortfolioPage() {
             }).map(([category, skills], index) => {
               const IconComponent = skillIconByLabel[category as keyof typeof skillIconByLabel];
               return (
-                <Card key={category} className="group h-full border-0 shadow-soft card-hover rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm flex flex-col">
+                <Card key={category} className="group h-full border-0 shadow-soft card-hover rounded-2xl bg-card/50 backdrop-blur-sm flex flex-col">
                   <CardHeader className="text-center pb-6 pt-8">
                     <div className="w-16 h-16 mx-auto mb-4 bg-accent/10 rounded-2xl flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                       <IconComponent className="w-8 h-8 text-accent" />
