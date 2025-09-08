@@ -299,6 +299,66 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+/* Navbar enhancements */
+.brand-gradient {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nav-link {
+  position: relative;
+  transition: color 300ms ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+  transition: width 300ms ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.cta-hover {
+  position: relative;
+  overflow: hidden;
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 300ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cta-hover:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 18px 30px -14px rgba(20, 184, 166, 0.35), 0 6px 14px -8px rgba(0,0,0,0.4);
+  filter: saturate(1.05);
+}
+.cta-hover:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.35);
+}
+
+/* glossy sweep for visibility */
+.cta-hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.cta-hover:hover::after {
+  animation: cta-shine 800ms ease;
+}
+
+@keyframes cta-shine {
+  from { left: -150%; }
+  to   { left: 150%; }
+}
+
 /* Elevated hover effects for cards */
 .card-hover {
   transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 500ms cubic-bezier(0.2, 0.8, 0.2, 1);

@@ -93,13 +93,13 @@ export default function PortfolioPage() {
       <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-md border-b z-50">
         <div className="max-w-6xl mx-auto px-8 py-6">
           <div className="flex justify-between items-center">
-            <div className="text-xl font-heading font-semibold">{CONTENT.personal.name}</div>
+            <div className="text-xl font-heading font-semibold brand-gradient">{CONTENT.personal.name}</div>
             <div className="flex items-center space-x-8">
               <div className="hidden md:flex space-x-10">
-                <a href="#about" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">About</a>
-                <a href="#skills" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">Skills</a>
-                <a href="#projects" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">Projects</a>
-                <a href="#contact" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">Contact</a>
+                <a href="#about" className="nav-link transition-colors duration-300 font-medium">About</a>
+                <a href="#skills" className="nav-link transition-colors duration-300 font-medium">Skills</a>
+                <a href="#projects" className="nav-link transition-colors duration-300 font-medium">Projects</a>
+                <a href="#contact" className="nav-link transition-colors duration-300 font-medium">Contact</a>
               </div>
               <ThemeToggle />
               <button
@@ -116,10 +116,10 @@ export default function PortfolioPage() {
         {/* Mobile menu */}
         <div className={`md:hidden overflow-hidden border-t transition-[max-height,opacity] duration-300 ease-out ${mobileOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="px-8 py-4 space-y-3 bg-background/95">
-            <a href="#about" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>About</a>
-            <a href="#skills" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>Skills</a>
-            <a href="#projects" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>Projects</a>
-            <a href="#contact" className="block py-1 hover:text-accent" onClick={() => setMobileOpen(false)}>Contact</a>
+            <a href="#about" className="block py-1 nav-link" onClick={() => setMobileOpen(false)}>About</a>
+            <a href="#skills" className="block py-1 nav-link" onClick={() => setMobileOpen(false)}>Skills</a>
+            <a href="#projects" className="block py-1 nav-link" onClick={() => setMobileOpen(false)}>Projects</a>
+            <a href="#contact" className="block py-1 nav-link" onClick={() => setMobileOpen(false)}>Contact</a>
           </div>
         </div>
       </nav>
@@ -157,7 +157,7 @@ export default function PortfolioPage() {
               </div>
 
               <div className="flex justify-center space-x-6 pt-8">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full shadow-soft-lg hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full shadow-soft-lg cta-hover">
                   <a href={CONTENT.social.github} target="_blank" rel="noopener noreferrer">
                     <Github className="w-5 h-5 mr-2" />
                     GitHub
@@ -277,7 +277,7 @@ export default function PortfolioPage() {
                       </Badge>
                     ))}
                   </div>
-                  <Button asChild className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                  <Button asChild className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-full shadow-soft cta-hover">
                     <a href={project.link} target="_blank" rel="noopener noreferrer">
                       View Project
                     </a>
@@ -302,7 +302,7 @@ export default function PortfolioPage() {
           <Card className="border-0 shadow-soft-lg rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm">
             <CardContent className="p-16 text-center">
               <div className="space-y-10">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-12 py-4 rounded-full shadow-soft-lg hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] text-lg">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-12 py-4 rounded-full shadow-soft-lg cta-hover text-lg">
                   <a href={`mailto:${CONTENT.personal.email}`}>
                     <Mail className="w-6 h-6 mr-3" />
                     Send me an email
