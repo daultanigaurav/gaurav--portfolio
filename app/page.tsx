@@ -7,27 +7,46 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Github, Linkedin, Mail, MapPin, ExternalLink, Terminal, Code, Server, Database, Wrench } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, ExternalLink, Terminal, Code, Server, Database, Wrench, Twitter, Instagram, PenTool } from "lucide-react";
+import Image from "next/image";
 
 export default function PortfolioPage() {
   const [terminalText, setTerminalText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
-    // Terminal animation
-    const text = "> Hello, I'm Gaurav_";
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < text.length) {
-        setTerminalText(text.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(interval);
-        setShowCursor(false);
-      }
-    }, 100);
+    // Rotating terminal typing animation
+    const lines = [
+      "> Hello, I'm Gaurav_",
+      "> Linux & AWS enthusiast",
+      "> Building full-stack web apps",
+      "> Crafting scalable backend systems",
+      "> Exploring DevOps & Cloud Computing",
+    ];
+    let lineIndex = 0;
+    let charIndex = 0;
+    let timeoutId: NodeJS.Timeout;
 
-    return () => clearInterval(interval);
+    const typeNext = () => {
+      const current = lines[lineIndex];
+      if (charIndex <= current.length) {
+        setTerminalText(current.slice(0, charIndex));
+        charIndex += 1;
+        timeoutId = setTimeout(typeNext, 70);
+      } else {
+        // pause, then move to next line
+        timeoutId = setTimeout(() => {
+          lineIndex = (lineIndex + 1) % lines.length;
+          charIndex = 0;
+          setShowCursor(true);
+          typeNext();
+        }, 2000);
+      }
+    };
+
+    setShowCursor(true);
+    typeNext();
+    return () => clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
@@ -60,13 +79,12 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  const skillIcons = {
-    cloud: Server,
-    backend: Code,
-    frontend: Terminal,
-    devops: Database,
-    tools: Wrench,
-  };
+  const skillIconByLabel = {
+    "Cloud & DevOps": Server,
+    Backend: Code,
+    Frontend: Terminal,
+    Tools: Wrench,
+  } as const;
 
   return (
     <div className="min-h-screen gradient-bg text-foreground font-body">
@@ -77,10 +95,10 @@ export default function PortfolioPage() {
             <div className="text-xl font-heading font-semibold">{CONTENT.personal.name}</div>
             <div className="flex items-center space-x-8">
               <div className="hidden md:flex space-x-10">
-                <a href="#about" className="hover:text-accent transition-colors duration-300 font-medium">About</a>
-                <a href="#skills" className="hover:text-accent transition-colors duration-300 font-medium">Skills</a>
-                <a href="#projects" className="hover:text-accent transition-colors duration-300 font-medium">Projects</a>
-                <a href="#contact" className="hover:text-accent transition-colors duration-300 font-medium">Contact</a>
+                <a href="#about" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">About</a>
+                <a href="#skills" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">Skills</a>
+                <a href="#projects" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">Projects</a>
+                <a href="#contact" className="hover:text-accent transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] font-medium">Contact</a>
               </div>
               <ThemeToggle />
             </div>
@@ -108,7 +126,6 @@ export default function PortfolioPage() {
             {/* Hero Content */}
             <div className="space-y-8">
               <Avatar className="w-32 h-32 mx-auto mb-8 ring-4 ring-accent/20 animate-float">
-                <AvatarImage src="/images/image-1.png" alt={CONTENT.personal.name} />
                 <AvatarFallback className="text-2xl font-heading">{CONTENT.personal.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
               </Avatar>
               
@@ -122,13 +139,13 @@ export default function PortfolioPage() {
               </div>
 
               <div className="flex justify-center space-x-6 pt-8">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full shadow-soft-lg hover:shadow-soft-lg hover:scale-105 transition-all duration-300">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full shadow-soft-lg hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                   <a href={CONTENT.social.github} target="_blank" rel="noopener noreferrer">
                     <Github className="w-5 h-5 mr-2" />
                     GitHub
                   </a>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-2 border-primary/20 hover:border-accent hover:text-accent px-8 py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-105 transition-all duration-300">
+                <Button asChild variant="outline" size="lg" className="border-2 border-primary/20 hover:border-accent hover:text-accent px-8 py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                   <a href={CONTENT.social.linkedin} target="_blank" rel="noopener noreferrer">
                     <Linkedin className="w-5 h-5 mr-2" />
                     LinkedIn
@@ -147,18 +164,27 @@ export default function PortfolioPage() {
             <h2 className="text-5xl font-heading font-bold mb-6">About Me</h2>
             <div className="w-32 h-1 bg-gradient-to-r from-accent to-primary mx-auto rounded-full"></div>
           </div>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <Card className="border-0 shadow-soft-lg rounded-2xl overflow-hidden">
-              <CardContent className="p-16">
-                <p className="text-xl leading-relaxed text-center mb-12 text-muted-foreground">{CONTENT.personal.about}</p>
-                <div className="flex flex-wrap gap-8 justify-center">
-                  <div className="flex items-center space-x-4 bg-muted/50 px-6 py-3 rounded-full">
-                    <Mail className="w-5 h-5 text-accent" />
-                    <span className="text-lg font-medium">{CONTENT.personal.email}</span>
+              <CardContent className="p-10 md:p-14">
+                <div className="grid md:grid-cols-5 gap-10 items-center">
+                  <div className="md:col-span-2 flex justify-center">
+                    <div className="w-48 h-64 md:w-56 md:h-72 rounded-xl overflow-hidden shadow-soft-lg ring-4 ring-accent/10">
+                      <Image src="/images/image-2.jpeg" alt={CONTENT.personal.name} width={448} height={640} className="w-full h-full object-cover" />
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-4 bg-muted/50 px-6 py-3 rounded-full">
-                    <MapPin className="w-5 h-5 text-accent" />
-                    <span className="text-lg font-medium">{CONTENT.personal.location}</span>
+                  <div className="md:col-span-3">
+                    <p className="text-xl leading-relaxed mb-8 text-muted-foreground">{CONTENT.personal.about}</p>
+                    <div className="flex flex-wrap gap-4">
+                      <div className="flex items-center space-x-4 bg-muted/50 px-6 py-3 rounded-full">
+                        <Mail className="w-5 h-5 text-accent" />
+                        <span className="text-lg font-medium">{CONTENT.personal.email}</span>
+                      </div>
+                      <div className="flex items-center space-x-4 bg-muted/50 px-6 py-3 rounded-full">
+                        <MapPin className="w-5 h-5 text-accent" />
+                        <span className="text-lg font-medium">{CONTENT.personal.location}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -174,21 +200,26 @@ export default function PortfolioPage() {
             <h2 className="text-5xl font-heading font-bold mb-6">Skills & Technologies</h2>
             <div className="w-32 h-1 bg-gradient-to-r from-accent to-primary mx-auto rounded-full"></div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Object.entries(CONTENT.skills).map(([category, skills], index) => {
-              const IconComponent = skillIcons[category as keyof typeof skillIcons];
+          <div className="grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(250px,1fr))]">
+            {Object.entries({
+              "Cloud & DevOps": [...CONTENT.skills.cloud, ...CONTENT.skills.devops],
+              Backend: CONTENT.skills.backend,
+              Frontend: CONTENT.skills.frontend,
+              Tools: CONTENT.skills.tools,
+            }).map(([category, skills], index) => {
+              const IconComponent = skillIconByLabel[category as keyof typeof skillIconByLabel];
               return (
-                <Card key={category} className="group border-0 shadow-soft hover:shadow-soft-lg transition-all duration-300 hover:-translate-y-2 rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm">
+                <Card key={category} className="group h-full border-0 shadow-soft card-hover rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm flex flex-col">
                   <CardHeader className="text-center pb-6 pt-8">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-accent/10 rounded-2xl flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-accent/10 rounded-2xl flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                       <IconComponent className="w-8 h-8 text-accent" />
                     </div>
-                    <CardTitle className="text-2xl font-heading capitalize">{category}</CardTitle>
+                    <CardTitle className="text-2xl font-heading">{category}</CardTitle>
                   </CardHeader>
-                  <CardContent className="pt-0 pb-8">
-                    <div className="flex flex-wrap gap-3 justify-center">
+                  <CardContent className="pt-0 pb-8 flex-1">
+                    <div className="flex flex-wrap gap-3 justify-center items-center">
                       {skills.map((skill) => (
-                        <Badge key={skill} variant="secondary" className="text-sm px-4 py-2 rounded-full bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-300 hover:scale-105">
+                        <Badge key={skill} variant="secondary" className="text-sm px-4 py-2 rounded-full bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02]">
                           {skill}
                         </Badge>
                       ))}
@@ -210,11 +241,11 @@ export default function PortfolioPage() {
           </div>
           <div className="grid md:grid-cols-2 gap-10">
             {CONTENT.projects.map((project, index) => (
-              <Card key={project.id} className="group border-0 shadow-soft hover:shadow-soft-lg transition-all duration-500 hover:-translate-y-3 hover:rotate-1 rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm">
+              <Card key={project.id} className="group border-0 shadow-soft card-hover-strong rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm">
                 <CardHeader className="pb-6 pt-8">
                   <CardTitle className="flex items-center justify-between text-2xl font-heading mb-4">
                     {project.title}
-                    <ExternalLink className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-300 text-accent" />
+                    <ExternalLink className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] text-accent" />
                   </CardTitle>
                   <CardDescription className="text-lg leading-relaxed text-muted-foreground">
                     {project.description}
@@ -223,12 +254,12 @@ export default function PortfolioPage() {
                 <CardContent className="pt-0 pb-8">
                   <div className="flex flex-wrap gap-3 mb-8">
                     {project.technologies.map((tech) => (
-                      <Badge key={tech} variant="outline" className="text-sm px-4 py-2 rounded-full border-accent/30 text-accent hover:bg-accent hover:text-white transition-all duration-300">
+                      <Badge key={tech} variant="outline" className="text-sm px-4 py-2 rounded-full border-accent/30 text-accent hover:bg-accent hover:text-white transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                         {tech}
                       </Badge>
                     ))}
                   </div>
-                  <Button asChild className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-105 transition-all duration-300">
+                  <Button asChild className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                     <a href={project.link} target="_blank" rel="noopener noreferrer">
                       View Project
                     </a>
@@ -253,23 +284,40 @@ export default function PortfolioPage() {
           <Card className="border-0 shadow-soft-lg rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm">
             <CardContent className="p-16 text-center">
               <div className="space-y-10">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-12 py-4 rounded-full shadow-soft-lg hover:shadow-soft-lg hover:scale-105 transition-all duration-300 text-lg">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-white px-12 py-4 rounded-full shadow-soft-lg hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] text-lg">
                   <a href={`mailto:${CONTENT.personal.email}`}>
                     <Mail className="w-6 h-6 mr-3" />
                     Send me an email
                   </a>
                 </Button>
                 <div className="flex justify-center space-x-6">
-                  <Button asChild variant="outline" size="lg" className="border-2 border-primary/20 hover:border-accent hover:text-accent px-8 py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-105 transition-all duration-300">
+                  <Button asChild variant="outline" size="lg" className="border-2 border-primary/20 hover:border-accent hover:text-accent px-8 py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                     <a href={CONTENT.social.github} target="_blank" rel="noopener noreferrer">
                       <Github className="w-5 h-5 mr-2" />
                       GitHub
                     </a>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="border-2 border-primary/20 hover:border-accent hover:text-accent px-8 py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-105 transition-all duration-300">
+                  <Button asChild variant="outline" size="lg" className="border-2 border-primary/20 hover:border-accent hover:text-accent px-8 py-3 rounded-full shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                     <a href={CONTENT.social.linkedin} target="_blank" rel="noopener noreferrer">
                       <Linkedin className="w-5 h-5 mr-2" />
                       LinkedIn
+                    </a>
+                  </Button>
+                </div>
+                <div className="flex justify-center gap-4 opacity-90">
+                  <Button asChild variant="outline" size="sm" className="border-primary/20 hover:border-accent hover:text-accent rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    <a href={CONTENT.social.x} target="_blank" rel="noopener noreferrer">
+                      <Twitter className="w-4 h-4 mr-2" /> X
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="border-primary/20 hover:border-accent hover:text-accent rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    <a href={CONTENT.social.hashnode} target="_blank" rel="noopener noreferrer">
+                      <PenTool className="w-4 h-4 mr-2" /> Hashnode
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="border-primary/20 hover:border-accent hover:text-accent rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    <a href={CONTENT.social.instagram} target="_blank" rel="noopener noreferrer">
+                      <Instagram className="w-4 h-4 mr-2" /> Instagram
                     </a>
                   </Button>
                 </div>

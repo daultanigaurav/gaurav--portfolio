@@ -1,10 +1,10 @@
 export const CONTENT = {
   personal: {
     name: "Gaurav Daultani",
-    tagline: "Building scalable solutions with Cloud, Linux & Django",
-    role: "AWS Cloud, Linux Enthusiast & Backend in Django",
+    tagline: "AWS Certified Cloud Practitioner • Linux • Django",
+    role: "AWS Certified Cloud Practitioner & Backend (Django)",
     about:
-      "I'm Gaurav Daultani, a developer passionate about cloud technologies, Linux systems, and backend development with Django. I enjoy turning ideas into scalable, reliable, and efficient solutions. Beyond code, I love experimenting with new technologies and continuously learning to grow as a developer.",
+      "AWS Certified Cloud Practitioner focused on cloud, Linux, and backend with Django. I build scalable, reliable systems and keep learning along the way.",
     email: "gauravdaultani7@gmail.com",
     location: "India",
   },
@@ -12,13 +12,16 @@ export const CONTENT = {
     github: "https://github.com/daultanigaurav",
     linkedin: "https://linkedin.com/in/daultanigaurav",
     portfolio: "https://gauravdaultani.me",
+    x: "https://x.com/_gauravdaultani/",
+    hashnode: "https://hashnode.com/@gauravdaultani",
+    instagram: "https://www.instagram.com/gaurav.daultani/",
   },
   skills: {
-    cloud: ["AWS", "Docker", "Kubernetes", "Terraform", "CloudFormation"],
-    backend: ["Python", "Django", "Node.js", "Express", "PostgreSQL", "MongoDB"],
+    cloud: ["AWS", "Docker", "Terraform"],
+    backend: ["Python", "Django", "PostgreSQL", "MongoDB"],
     frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
-    devops: ["Linux", "Git", "CI/CD", "Jenkins", "Nginx", "Apache"],
-    tools: ["VS Code", "GitHub", "Postman", "Figma", "Slack", "Jira"],
+    devops: ["Linux", "Git", "CI/CD"],
+    tools: ["VS Code", "GitHub", "Postman", "Jira"],
   },
   projects: [
     {
