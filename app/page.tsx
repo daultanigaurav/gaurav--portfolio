@@ -14,6 +14,16 @@ export default function PortfolioPage() {
   const [terminalText, setTerminalText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [preloaderText, setPreloaderText] = useState("");
+
+  useEffect(() => {
+    // Preloader sequence: "G" -> "GD" -> reveal
+    setPreloaderText("G");
+    const step1 = setTimeout(() => setPreloaderText("GD"), 700);
+    const end = setTimeout(() => setIsLoading(false), 1600);
+    return () => { clearTimeout(step1); clearTimeout(end); };
+  }, []);
 
   useEffect(() => {
     // Rotating terminal typing animation
@@ -88,7 +98,13 @@ export default function PortfolioPage() {
   } as const;
 
   return (
-    <div className="min-h-screen gradient-bg text-foreground font-body">
+    <div className="min-h-screen gradient-bg bg-grain text-foreground font-body">
+      {isLoading && (
+        <div className="preloader">
+          <div className="preloader__type">{preloaderText}<span className="preloader__cursor">_</span></div>
+        </div>
+      )}
+      <div className="mesh-accent" aria-hidden="true" />
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-md border-b z-50">
         <div className="max-w-6xl mx-auto px-8 py-6">
@@ -260,7 +276,11 @@ export default function PortfolioPage() {
           <div className="grid md:grid-cols-2 gap-10">
             {CONTENT.projects.map((project, index) => (
               <Card key={project.id} className="group border-0 shadow-soft card-hover-strong rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm">
-                <CardHeader className="pb-6 pt-8">
+                {/* Thumbnail banner / mockup bar */}
+                <div className="h-36 w-full bg-gradient-to-br from-accent/30 to-primary/20 relative overflow-hidden">
+                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_20%,white,transparent_35%),radial-gradient(circle_at_80%_30%,white,transparent_35%)]" />
+                </div>
+                <CardHeader className="pb-6 pt-6">
                   <CardTitle className="flex items-center justify-between text-2xl font-heading mb-4">
                     {project.title}
                     <ExternalLink className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] text-accent" />
@@ -277,7 +297,7 @@ export default function PortfolioPage() {
                       </Badge>
                     ))}
                   </div>
-                  <Button asChild className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-full shadow-soft cta-hover">
+                  <Button asChild className={`w-full py-3 rounded-full shadow-soft cta-hover ${index % 2 === 0 ? 'bg-accent text-white hover:bg-accent/90' : 'bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-white'}`}>
                     <a href={project.link} target="_blank" rel="noopener noreferrer">
                       View Project
                     </a>
