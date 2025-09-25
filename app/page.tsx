@@ -292,7 +292,16 @@ export default function PortfolioPage() {
                 <CardHeader className="pb-6 pt-6">
                   <CardTitle className="flex items-center justify-between text-2xl font-heading mb-4">
                     {project.title}
-                    <ExternalLink className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] text-accent" />
+                    {project.deployedLink && (
+                      <a 
+                        href={project.deployedLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:text-accent transition-colors"
+                      >
+                        <ExternalLink className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] text-accent" />
+                      </a>
+                    )}
                   </CardTitle>
                   <CardDescription className="text-lg leading-relaxed text-muted-foreground">
                     {project.description}
