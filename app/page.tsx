@@ -97,10 +97,10 @@ export default function PortfolioPage() {
   } as const;
 
   const projectImages: Record<string, { src: string; alt: string }> = {
-    staysmart: { src: "/placeholder.jpg", alt: "StaySmart portal preview" },
-    "github-analyzer": { src: "/placeholder-logo.png", alt: "GitHub analyzer preview" },
-    "frame-interpolation": { src: "/placeholder-user.jpg", alt: "AI frame interpolation preview" },
-    travellite: { src: "/placeholder.svg", alt: "TravelLite preview" },
+    staysmart: { src: "/images/staysmart.png", alt: "StaySmart - Hostel Management Portal Preview" },
+    "github-analyzer": { src: "/images/github-analyzer.png", alt: "GitHub Repository Analyzer Preview" },
+    "frame-interpolation": { src: "/images/frame-interpolation.png", alt: "AI Frame Interpolation Preview" },
+    "clubs-hub": { src: "/images/clubs-hub.png", alt: "Clubs Hub - College Events Platform Preview" },
   };
 
   return (
